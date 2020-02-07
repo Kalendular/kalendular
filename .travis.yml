@@ -17,6 +17,9 @@ install:
   - git clone https://github.com/flutter/flutter.git -b beta
   - ./flutter/bin/flutter doctor
 
+before_script:
+  - git config --global url."https://github.com/".insteadOf "git@github.com:"
+
 cache:
   directories:
     - $HOME/.pub-cache
@@ -25,7 +28,6 @@ jobs:
   include:
     - stage: tests
       script:
-        - git config --global url."https://github.com/".insteadOf "git@github.com:"
         - cp dist.env .env
         - ./flutter/bin/flutter test
     - stage: build_linux

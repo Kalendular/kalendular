@@ -25,6 +25,7 @@ jobs:
   include:
     - stage: tests
       script:
+        - git config --global url."https://github.com/".insteadOf "git@github.com:"
         - ./flutter/bin/flutter test
     - stage: build_linux
       if: branch = master

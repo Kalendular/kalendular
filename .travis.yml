@@ -26,6 +26,7 @@ jobs:
     - stage: tests
       script:
         - git config --global url."https://github.com/".insteadOf "git@github.com:"
+        - cp dist.env .env
         - ./flutter/bin/flutter test
     - stage: build_linux
       if: branch = master

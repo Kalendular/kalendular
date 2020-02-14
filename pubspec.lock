@@ -34,7 +34,7 @@ packages:
     description:
       path: "."
       ref: "cleanup/class_structure"
-      resolved-ref: e050d1bb527bce52b97756af78930acf976c407f
+      resolved-ref: "15d0251cc4f26cf364cda3e19a4b3f9285843716"
       url: "git@github.com:Kalendular/caldav.git"
     source: git
     version: "0.0.0"

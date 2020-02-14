@@ -66,7 +66,8 @@ class AddCalendarPage extends StatelessWidget {
                 });
 
                 var personalCalendar = calendars.firstWhere((cal) => cal.displayName == 'Persönlich');
-                client.createCalendarEvent(personalCalendar.path);
+                var repo = personalCalendar.getEventRepository();
+                repo.createEvent();
               },
             ),
             RaisedButton(

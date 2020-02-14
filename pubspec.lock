@@ -33,8 +33,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: develop
-      resolved-ref: fef2d2ab44a4789bb74d7a5be9e2b76e95209b38
+      ref: "cleanup/class_structure"
+      resolved-ref: e050d1bb527bce52b97756af78930acf976c407f
       url: "git@github.com:Kalendular/caldav.git"
     source: git
     version: "0.0.0"

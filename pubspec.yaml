@@ -27,7 +27,7 @@ dependencies:
   caldav:
     git:
       url: git@github.com:Kalendular/caldav.git
-      ref: develop
+      ref: cleanup/class_structure
 
   flutter_dotenv: ^2.1.0
 

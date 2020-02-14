@@ -1,9 +1,7 @@
-import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:caldav/caldav.dart';
-import 'package:caldav/src/types.dart' as types;
 
 class AddCalendarPage extends StatelessWidget {
 
@@ -17,30 +15,6 @@ class AddCalendarPage extends StatelessWidget {
   // always marked "final".
 
   final String title = 'Widget';
-
-  /// Returns URL of user's principal
-  Future<String> getCurrentUserPrincipal(CalDavClient client) async {
-    var requestResponse = await client.getWebDavResponse(
-        '',
-        body: '<x0:propfind xmlns:x0="DAV:"><x0:prop><x0:current-user-principal/></x0:prop></x0:propfind>'
-    );
-
-    var prop = client.findProperty(requestResponse, new WebDavProp('current-user-principal'));
-    var hrefObj = (prop.value as List<WebDavProp>).firstWhere(types.isHrefProp);
-    return hrefObj.value.toString();
-  }
-
-  /// Returns path to user's home calendar
-  Future<String> getUserHomeCalendar(CalDavClient client) async {
-    String userPrincipal = await getCurrentUserPrincipal(client);
-    var requestResponse = await client.getWebDavResponse(
-        userPrincipal,
-        body: '<x0:propfind xmlns:x0="DAV:"><x0:prop><x1:calendar-home-set xmlns:x1="urn:ietf:params:xml:ns:caldav"/></x0:prop></x0:propfind>'
-    );
-    var prop = client.findProperty(requestResponse, new WebDavProp('calendar-home-set', namespace: 'urn:ietf:params:xml:ns:caldav'));
-    var hrefObj = (prop.value as List<WebDavProp>).firstWhere(types.isHrefProp);
-    return hrefObj.value.toString();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +58,11 @@ class AddCalendarPage extends StatelessWidget {
                     protocol: DotEnv().env['CALDAV_PROTOCOL']
                 );
 
-                String userHome = await getUserHomeCalendar(client);
+                String userHome = await client.getUserHomeCalendar();
+                print('User home path: ' + userHome);
                 var calendars = await client.getCalendars(userHome);
                 calendars.forEach((calendar) {
-                  developer.log(calendar.toString());
+                  print(calendar.toString());
                 });
 
                 var personalCalendar = calendars.firstWhere((cal) => cal.displayName == 'Persönlich');
